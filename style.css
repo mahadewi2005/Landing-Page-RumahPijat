@@ -1,0 +1,1327 @@
+/* =========================
+   RESET
+========================= */
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+/* =========================
+   SPLASH SCREEN
+========================= */
+
+#splash {
+  position: fixed;
+  inset: 0;
+  width: 100%;
+  height: 100vh;
+  height: 100dvh;
+  background: #bca88d;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 9999;
+  transition:
+    opacity 0.8s ease,
+    visibility 0.8s ease;
+}
+
+/* =========================
+   SPLASH CONTENT
+========================= */
+
+.splash-content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  animation: splashIn 1.2s ease forwards;
+}
+
+/* =========================
+   LOGO
+========================= */
+
+.logo {
+  width: 330px;
+  max-width: 75vw;
+  height: auto;
+  display: block;
+  animation: logoAnimation 1.2s ease forwards;
+  margin-bottom: 2rem;
+}
+
+/* =========================
+   LOADING
+========================= */
+
+.loading {
+  display: flex;
+  gap: 7px;
+  margin-top: 1px;
+}
+
+.loading span {
+  width: 7px;
+  height: 7px;
+  background: #ffffff;
+  border-radius: 50%;
+  animation: loading 1.2s infinite ease-in-out;
+}
+
+.loading span:nth-child(1) {
+  animation-delay: 0s;
+}
+
+.loading span:nth-child(2) {
+  animation-delay: 0.15s;
+}
+
+.loading span:nth-child(3) {
+  animation-delay: 0.3s;
+}
+
+.splash-content p {
+  margin-top: 10px;
+
+  color: #ffffff;
+
+  font-family: var(--font-display);
+  font-size: 15px;
+
+  opacity: 0.9;
+}
+
+/* =========================
+   ANIMATION (shared)
+========================= */
+
+@keyframes splashIn {
+  from {
+    opacity: 0;
+    transform: scale(0.95);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+@keyframes logoAnimation {
+  from {
+    opacity: 0;
+    transform: scale(0.85);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+@keyframes loading {
+  0%,
+  80%,
+  100% {
+    opacity: 0.3;
+    transform: scale(0.7);
+  }
+  40% {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+/* =========================
+   SPLASH HILANG
+========================= */
+
+#splash.hide {
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+}
+
+/* =========================
+   MAIN CONTENT
+========================= */
+
+#main-content {
+  width: 100%;
+  margin: 0;
+  padding: 0;
+}
+
+/* =========================
+   HERO WRAPPER (topbar + galeri berbagi latar ochre)
+========================= */
+
+.hero-wrap {
+  background: #bca88d;
+  border-top: 4px solid var(--ink);
+}
+
+/* =========================
+   TOPBAR
+========================= */
+
+.topbar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  z-index: 60; /* di atas WhatsApp fab (40), di bawah sidebar (100) */
+  /* background: #bca88d; */
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1.5rem;
+  padding: 1.6rem clamp(1.25rem, 4vw, 3rem);
+  /* transition: box-shadow 0.3s ease; */
+}
+
+/* bayangan halus muncul begitu halaman mulai discroll */
+/* .topbar.is-scrolled {
+  box-shadow: 0 4px 18px rgba(0, 0, 0, 0.18);
+} */
+
+/* beri ruang kosong pengganti supaya konten tidak ketutupan header */
+.hero-wrap {
+  padding-top: var(--header-height, 84px);
+}
+
+/* supaya klik menu ke section tidak berhenti pas di bawah header */
+#beranda,
+#layanan,
+#tentang,
+#kontak {
+  scroll-margin-top: var(--header-height, 84px);
+}
+
+.menu-toggle {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.7rem;
+  background: none;
+  border: none;
+  cursor: pointer;
+  color: #ffffff;
+  font-family: "Alegreya", serif;
+  font-size: 0.8rem;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  padding: 0.4rem;
+}
+
+.burger {
+  position: relative;
+  width: 20px;
+  height: 14px;
+  flex-shrink: 0;
+}
+
+.burger-line {
+  position: absolute;
+  left: 0;
+  width: 100%;
+  height: 2px;
+  background: currentColor;
+  border-radius: 2px;
+  transition:
+    top 0.3s cubic-bezier(0.22, 1, 0.36, 1),
+    opacity 0.25s ease,
+    width 0.3s ease;
+}
+
+.burger-line:nth-child(1) {
+  top: 0;
+}
+
+.burger-line:nth-child(2) {
+  top: 6px;
+}
+
+.burger-line:nth-child(3) {
+  top: 12px;
+}
+
+/* saat hover: garis atas & bawah merenggang, tengah memudar & menyusut */
+.menu-toggle:hover .burger-line:nth-child(1) {
+  top: -3px;
+}
+
+.menu-toggle:hover .burger-line:nth-child(2) {
+  opacity: 0;
+  width: 0;
+  left: 50%;
+}
+
+.menu-toggle:hover .burger-line:nth-child(3) {
+  top: 17px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .burger-line {
+    transition: none;
+  }
+}
+
+.menu-toggle i {
+  font-size: 1.25rem;
+}
+
+/* =========================
+   SIDEBAR MENU
+========================= */
+
+.sidebar-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(15, 20, 15, 0.5);
+  opacity: 0;
+  visibility: hidden;
+  transition:
+    opacity 0.4s ease,
+    visibility 0.4s ease;
+  z-index: 90;
+}
+
+.sidebar-overlay.is-visible {
+  opacity: 1;
+  visibility: visible;
+}
+
+.sidebar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 100vh;
+  height: 100dvh;
+  width: min(320px, 84vw);
+  background: #bca88d;
+  z-index: 100;
+  transform: translateX(-100%);
+  transition: transform 0.45s cubic-bezier(0.22, 1, 0.36, 1);
+  display: flex;
+  flex-direction: column;
+  box-shadow: 12px 0 40px rgba(0, 0, 0, 0.25);
+}
+
+.sidebar.is-open {
+  transform: translateX(0);
+}
+
+.sidebar-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 1.6rem clamp(1.25rem, 4vw, 2rem);
+}
+
+.sidebar-brand {
+  font-family: "Alegreya SC", serif;
+  font-style: italic;
+  font-size: 1.4rem;
+  color: #ffffff;
+  text-decoration: none;
+}
+
+.sidebar-close {
+  background: none;
+  border: none;
+  color: #ffffff;
+  font-size: 1.2rem;
+  cursor: pointer;
+  padding: 0.4rem;
+  transition: transform 0.3s ease;
+}
+
+.sidebar-close:hover {
+  transform: rotate(90deg);
+}
+
+.sidebar-nav {
+  display: flex;
+  flex-direction: column;
+  padding: 1rem clamp(1.25rem, 4vw, 2rem);
+  gap: 0.4rem;
+  flex: 1;
+}
+
+.sidebar-nav a {
+  font-family: "Alegreya", serif;
+  font-size: 1.3rem;
+  color: #ffffff;
+  text-decoration: none;
+  padding: 0.7rem 0;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.15);
+  opacity: 0;
+  transform: translateX(-12px);
+  transition:
+    opacity 0.4s ease,
+    transform 0.4s ease,
+    color 0.25s ease;
+}
+
+.sidebar.is-open .sidebar-nav a {
+  opacity: 1;
+  transform: translateX(0);
+}
+
+.sidebar.is-open .sidebar-nav a:nth-child(1) {
+  transition-delay: 0.1s;
+}
+.sidebar.is-open .sidebar-nav a:nth-child(2) {
+  transition-delay: 0.16s;
+}
+.sidebar.is-open .sidebar-nav a:nth-child(3) {
+  transition-delay: 0.22s;
+}
+.sidebar.is-open .sidebar-nav a:nth-child(4) {
+  transition-delay: 0.28s;
+}
+
+.sidebar-nav a:hover {
+  color: #3e3f29;
+}
+
+.sidebar-footer {
+  padding: 1.5rem clamp(1.25rem, 4vw, 2rem) 2rem;
+  border-top: 1px solid rgba(255, 255, 255, 0.15);
+}
+
+.sidebar-wa {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  color: #ffffff;
+  font-family: "Alegreya", serif;
+  font-size: 0.95rem;
+  text-decoration: none;
+}
+
+body.sidebar-active {
+  overflow: hidden; /* kunci scroll halaman utama saat sidebar terbuka */
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .sidebar,
+  .sidebar-overlay,
+  .sidebar-nav a,
+  .sidebar-close {
+    transition: none;
+  }
+}
+
+.brand-mark {
+  text-decoration: none;
+  letter-spacing: 0.01em;
+}
+
+.brand-mark img {
+  width: 180px; /* kecilkan sesuai kebutuhan */
+  height: auto;
+  display: block;
+}
+
+@media (max-width: 780px) {
+  .topbar {
+    justify-content: space-between;
+  }
+
+  .menu-toggle {
+    order: 1;
+  }
+
+  .topbar-right {
+    order: 2;
+  }
+
+  .brand-mark {
+    order: 3;
+  }
+
+  .brand-mark img {
+    width: 110px; /* logo lebih kecil di mobile */
+  }
+}
+
+.topbar-right {
+  display: flex;
+  align-items: center;
+  gap: clamp(1rem, 3vw, 2.2rem);
+  color: #fff;
+}
+
+.showcase-link {
+  display: none;
+  align-items: center;
+  gap: 0.35rem;
+  font-family: var(--font-body);
+  font-size: 0.78rem;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  color: var(--cream);
+  text-decoration: none;
+}
+
+.icon-btn {
+  background: none;
+  border: none;
+  color: var(--cream);
+  font-size: 1.05rem;
+  cursor: pointer;
+  display: flex;
+}
+
+.lang-btn {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  background: none;
+  border: none;
+  color: var(--cream);
+  font-family: var(--font-body);
+  font-size: 0.85rem;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+@media (min-width: 720px) {
+  .showcase-link {
+    display: inline-flex;
+  }
+}
+
+/* =========================
+   HERO GALERI (foto besar + kartu layanan)
+========================= */
+
+.hero-gallery {
+  padding: 0 clamp(1.25rem, 4vw, 3rem) clamp(2rem, 6vw, 4rem);
+}
+
+.hero-gallery-grid {
+  display: grid;
+  grid-template-columns: 1.55fr 1fr;
+  gap: clamp(1rem, 2.5vw, 1.75rem);
+  max-width: 1400px;
+  margin: 0 auto;
+}
+
+.hero-photo {
+  position: relative;
+  overflow: hidden;
+  background: var(--ochre-deep);
+}
+
+.hero-photo img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+.hero-photo--main {
+  position: relative;
+}
+
+.hero-photo--main .cursor-follow-photo {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 170px;
+  height: 200px;
+  object-fit: cover;
+  border-radius: 4px;
+  box-shadow: 0 8px 18px rgba(15, 20, 15, 0.35);
+  pointer-events: none;
+  opacity: 0;
+  transform: translate(-50%, -50%) scale(0.85);
+  transition:
+    opacity 0.3s ease,
+    scale 0.3s ease;
+  z-index: 5;
+  will-change: transform, opacity;
+}
+
+.hero-photo--main.is-hovering .cursor-follow-photo {
+  opacity: 1;
+  transform: translate(-50%, -50%) scale(1);
+}
+
+@media (max-width: 780px) {
+  .cursor-follow-photo {
+    display: none; /* tidak relevan di layar sentuh */
+  }
+}
+
+.hero-photo--card {
+  aspect-ratio: 3 / 3.3;
+  align-self: start;
+}
+
+.hero-photo--card figcaption {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  padding: 1.5rem 1.4rem 1.2rem;
+  background: linear-gradient(
+    to top,
+    rgba(15, 20, 15, 0.82) 0%,
+    rgba(15, 20, 15, 0.35) 55%,
+    transparent 100%
+  );
+  color: var(--cream);
+}
+
+.cap-title {
+  font-family: "Alegreya", serif;
+  font-size: 1.05rem;
+  margin-bottom: 0.4rem;
+  color: #ffffff;
+}
+
+.cap-desc {
+  font-family: "Alegreya", serif;
+  font-size: 0.78rem;
+  line-height: 1.5;
+  opacity: 0.85;
+  color: #ffffff;
+}
+
+/* =========================
+   WHATSAPP MENGAMBANG
+========================= */
+
+.whatsapp-fab {
+  position: fixed;
+  right: 1.5rem;
+  bottom: 1.5rem;
+  width: 54px;
+  height: 54px;
+  border-radius: 50%;
+  background: #bca88d;
+  color: #3e3f29;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.5rem;
+  text-decoration: none;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.25);
+  z-index: 40;
+  transition: transform 0.2s ease;
+}
+
+.whatsapp-fab:hover {
+  transform: translateY(-3px);
+}
+
+/* =========================
+   RESPONSIVE
+========================= */
+
+@media (max-width: 780px) {
+  .hero-gallery-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .hero-photo--main {
+    aspect-ratio: 4 / 3.4;
+  }
+
+  .hero-photo--card {
+    aspect-ratio: 16 / 10;
+  }
+}
+
+@media (max-width: 600px) {
+  .logo {
+    width: 280px;
+    max-width: 80vw;
+  }
+
+  .splash-content p {
+    font-size: 14px;
+  }
+
+  .brand-mark {
+    font-size: 1.5rem;
+  }
+}
+
+/* =========================
+   LAYANAN
+========================= */
+
+.layanan {
+  background: #fffdf8;
+  padding: clamp(3rem, 8vw, 6rem) clamp(1.25rem, 4vw, 3rem);
+}
+
+.layanan-inner {
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.layanan-head {
+  margin-bottom: clamp(2rem, 5vw, 3.5rem);
+}
+
+.layanan-head .eyebrow {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.6rem;
+  font-family: "Alegreya SC", serif;
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: #c08a3d;
+  margin-bottom: 1rem;
+}
+
+/* .layanan-head .eyebrow::before {
+  content: "";
+  width: 26px;
+  height: 1px;
+  background: #c08a3d;
+} */
+
+.layanan-title {
+  font-family: "Alegreya", serif;
+  font-weight: 500;
+  font-size: clamp(1.9rem, 3vw + 1rem, 2.8rem);
+  color: #1b2e22;
+  max-width: 16ch;
+}
+
+.layanan-grid {
+  display: grid;
+  grid-template-columns: 1.4fr 1fr;
+  gap: clamp(2rem, 5vw, 4rem);
+  align-items: start;
+}
+
+.layanan-list {
+  list-style: none;
+  border-top: 1px solid rgba(27, 46, 34, 0.14);
+}
+
+.layanan-item {
+  counter-increment: layanan-counter;
+  border-bottom: 1px solid rgba(27, 46, 34, 0.14);
+}
+
+.layanan-list {
+  counter-reset: layanan-counter;
+}
+
+.layanan-item a {
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  padding: 1.5rem 0;
+  text-decoration: none;
+  color: #1b2e22;
+  transition:
+    color 0.3s ease,
+    padding-left 0.3s ease;
+}
+
+.layanan-item a::before {
+  content: counter(layanan-counter, decimal-leading-zero);
+  font-family: "Alegreya", serif;
+  font-size: 0.85rem;
+  color: #c08a3d;
+  min-width: 2ch;
+}
+
+.layanan-item-name {
+  font-family: "Alegreya", serif;
+  font-size: clamp(1.15rem, 1.6vw, 1.5rem);
+  flex: 1;
+  transition: transform 0.3s ease;
+}
+
+.layanan-item-meta {
+  font-family: "Alegreya", serif;
+  font-size: 0.85rem;
+  color: rgba(27, 46, 34, 0.55);
+  white-space: nowrap;
+}
+
+.layanan-item-arrow {
+  font-size: 1.1rem;
+  color: #3e3f29;
+  opacity: 0;
+  transform: translate(-6px, 6px);
+  transition:
+    opacity 0.3s ease,
+    transform 0.3s ease;
+}
+
+.layanan-item a:hover {
+  color: #3e3f29;
+  padding-left: 0.6rem;
+}
+
+.layanan-item a:hover .layanan-item-arrow {
+  opacity: 1;
+  transform: translate(0, 0);
+}
+
+/* default: tampil (asumsinya mobile) */
+.layanan-item-thumb {
+  display: block;
+  width: 52px;
+  height: 52px;
+  object-fit: cover;
+  border-radius: 4px;
+  order: 2;
+}
+
+/* panel foto besar, hanya tampil di desktop */
+.layanan-preview {
+  position: relative;
+  aspect-ratio: 3 / 3.6;
+  overflow: hidden;
+  border-radius: 6px;
+  background: #ece1c6;
+  position: sticky;
+  top: 6rem;
+}
+
+.layanan-preview-img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  opacity: 0;
+  transform: scale(1.05);
+  transition:
+    opacity 0.6s ease,
+    transform 0.6s ease;
+}
+
+.layanan-preview-img.is-active {
+  opacity: 1;
+  transform: scale(1);
+}
+
+@media (max-width: 900px) {
+  .layanan-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .layanan-preview {
+    display: none;
+  }
+
+  .layanan-item-thumb {
+    display: block;
+    width: 52px;
+    height: 52px;
+    object-fit: cover;
+    border-radius: 4px;
+    order: 2;
+  }
+
+  .layanan-item a {
+    flex-wrap: wrap;
+  }
+
+  .layanan-item-name {
+    order: 1;
+  }
+
+  .layanan-item-meta {
+    order: 3;
+    width: 100%;
+    padding-left: 2.6rem;
+  }
+
+  .layanan-item-arrow {
+    display: none;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .layanan-item a,
+  .layanan-item-arrow,
+  .layanan-preview-img {
+    transition: none;
+  }
+}
+
+/* =========================
+   ANIMASI SCROLL — LAYANAN
+========================= */
+
+.layanan-head .eyebrow,
+.layanan-title {
+  opacity: 0;
+  transform: translateY(18px);
+  transition:
+    opacity 1.1s ease,
+    transform 1.1s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.layanan-title {
+  transition-delay: 0.25s;
+}
+
+.layanan-item {
+  opacity: 0;
+  transform: translateY(24px);
+  transition:
+    opacity 1s ease,
+    transform 1s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+/* jeda antar item diperlebar */
+.layanan-item:nth-child(1) {
+  transition-delay: 0.35s;
+}
+.layanan-item:nth-child(2) {
+  transition-delay: 0.55s;
+}
+.layanan-item:nth-child(3) {
+  transition-delay: 0.75s;
+}
+.layanan-item:nth-child(4) {
+  transition-delay: 0.95s;
+}
+.layanan-item:nth-child(5) {
+  transition-delay: 1.15s;
+}
+
+.layanan-preview {
+  opacity: 0;
+  transform: translateY(24px);
+  transition:
+    opacity 1.1s ease,
+    transform 1.1s cubic-bezier(0.22, 1, 0.36, 1);
+  transition-delay: 0.6s;
+}
+
+/* class ini ditambahkan JS saat section terlihat */
+.layanan.is-visible .eyebrow,
+.layanan.is-visible .layanan-title,
+.layanan.is-visible .layanan-item,
+.layanan.is-visible .layanan-preview {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .layanan-head .eyebrow,
+  .layanan-title,
+  .layanan-item,
+  .layanan-preview {
+    transition: none;
+    opacity: 1;
+    transform: none;
+  }
+}
+
+/* =========================
+   TENTANG KAMI
+========================= */
+
+.tentang {
+  background: #bca88d;
+  padding: clamp(3rem, 8vw, 6rem) clamp(1.25rem, 4vw, 3rem);
+}
+
+.tentang-inner {
+  max-width: 1200px;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: 0.9fr 1.1fr;
+  gap: clamp(2rem, 5vw, 4rem);
+  align-items: center;
+}
+
+.tentang-photo {
+  position: relative;
+  aspect-ratio: 4 / 5;
+  overflow: hidden;
+  border-radius: 6px;
+}
+
+.tentang-photo img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  transition: transform 0.8s ease;
+}
+
+.tentang-photo:hover img {
+  transform: scale(1.05);
+}
+
+.tentang-content .eyebrow {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.6rem;
+  font-family: "Alegreya SC", serif;
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: #3e3f29;
+  margin-bottom: 1rem;
+}
+
+.tentang-title {
+  font-family: "Alegreya", serif;
+  font-weight: 500;
+  font-size: clamp(1.8rem, 2.6vw + 1rem, 2.6rem);
+  line-height: 1.25;
+  color: #fff;
+  max-width: 18ch;
+  margin-bottom: 1.4rem;
+}
+
+.tentang-text {
+  font-family: "Alegreya", serif;
+  font-size: 1.02rem;
+  line-height: 1.75;
+  color: #fff;
+  max-width: 52ch;
+  margin-bottom: 1.8rem;
+}
+
+.tentang-quote {
+  border-left: 2px solid #3e3f29;
+  padding-left: 1.2rem;
+  margin: 0 0 2.2rem;
+  font-family: "Alegreya", serif;
+  font-style: italic;
+  font-size: 1.1rem;
+  color: #fff;
+}
+
+.tentang-quote cite {
+  display: block;
+  margin-top: 0.5rem;
+  font-style: normal;
+  font-size: 0.8rem;
+  letter-spacing: 0.05em;
+  color: #3e3f29;
+}
+
+.tentang-stats {
+  display: flex;
+  flex-wrap: wrap;
+  gap: clamp(1.6rem, 4vw, 3rem);
+  padding-top: 1.6rem;
+  border-top: 1px solid rgba(27, 46, 34, 0.18);
+}
+
+.stat {
+  display: flex;
+  flex-direction: column;
+}
+
+.stat-value {
+  display: flex;
+  align-items: baseline;
+}
+
+.stat-number,
+.stat-suffix {
+  font-family: "Alegreya", serif;
+  font-size: clamp(1.8rem, 2.4vw + 0.8rem, 2.4rem);
+  color: #3e3f29;
+  line-height: 1;
+}
+
+.stat-suffix {
+  margin-left: 0.1rem;
+}
+
+.stat-label {
+  margin-top: 0.4rem;
+  font-family: "Alegreya", serif;
+  font-size: 0.78rem;
+  letter-spacing: 0.05em;
+  color: rgba(27, 46, 34, 0.6);
+}
+
+/* =========================
+   ANIMASI SCROLL — TENTANG
+========================= */
+
+.tentang-photo {
+  opacity: 0;
+  transform: translateX(-30px);
+  transition:
+    opacity 1.1s ease,
+    transform 1.1s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.tentang-content .eyebrow,
+.tentang-title,
+.tentang-text,
+.tentang-quote,
+.tentang-stats {
+  opacity: 0;
+  transform: translateY(22px);
+  transition:
+    opacity 1s ease,
+    transform 1s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.tentang-title {
+  transition-delay: 0.2s;
+}
+.tentang-text {
+  transition-delay: 0.4s;
+}
+.tentang-quote {
+  transition-delay: 0.6s;
+}
+.tentang-stats {
+  transition-delay: 0.8s;
+}
+
+.tentang.is-visible .tentang-photo {
+  opacity: 1;
+  transform: translateX(0);
+}
+
+.tentang.is-visible .tentang-content .eyebrow,
+.tentang.is-visible .tentang-title,
+.tentang.is-visible .tentang-text,
+.tentang.is-visible .tentang-quote,
+.tentang.is-visible .tentang-stats {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+@media (max-width: 900px) {
+  .tentang-inner {
+    grid-template-columns: 1fr;
+  }
+
+  .tentang-photo {
+    aspect-ratio: 4 / 3;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .tentang-photo,
+  .tentang-content .eyebrow,
+  .tentang-title,
+  .tentang-text,
+  .tentang-quote,
+  .tentang-stats {
+    transition: none;
+    opacity: 1;
+    transform: none;
+  }
+}
+
+/* =========================
+   KONTAK
+========================= */
+
+.kontak {
+  position: relative;
+  overflow: hidden;
+  padding: clamp(4rem, 10vw, 7rem) clamp(1.25rem, 4vw, 3rem);
+}
+
+/* foto latar + overlay gelap di belakang konten */
+
+.kontak-bg img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+.kontak-bg {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  background-image: url("./img/spa2.jpg");
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-attachment: fixed; /* kunci efek parallax */
+}
+
+.kontak-overlay {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  background: linear-gradient(
+    to bottom,
+    rgba(15, 22, 16, 0.78) 0%,
+    rgba(15, 22, 16, 0.62) 55%,
+    rgba(15, 22, 16, 0.85) 100%
+  );
+}
+
+.kontak-inner {
+  position: relative;
+  z-index: 1;
+  max-width: 1200px;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: 1.1fr 0.9fr;
+  gap: clamp(2rem, 5vw, 4rem);
+  align-items: center;
+}
+
+.eyebrow--light {
+  color: #e0b673 !important;
+}
+
+.kontak-title {
+  font-family: "Alegreya", serif;
+  font-weight: 500;
+  font-size: clamp(1.9rem, 3vw + 1rem, 2.8rem);
+  color: #ffffff;
+  max-width: 16ch;
+  margin-bottom: 1.2rem;
+}
+
+.kontak-desc {
+  font-family: "Alegreya", serif;
+  font-size: 1rem;
+  line-height: 1.7;
+  color: rgba(255, 255, 255, 0.82);
+  max-width: 46ch;
+  margin-bottom: 2rem;
+}
+
+.kontak-cta {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.6rem;
+  background: #bca88d;
+  color: #000;
+  font-family: "Alegreya", serif;
+  font-weight: 700;
+  font-size: 0.95rem;
+  text-decoration: none;
+  padding: 0.9rem 1.8rem;
+  border-radius: 999px;
+  transition:
+    background 0.3s ease,
+    transform 0.3s ease;
+  margin-bottom: 2.4rem;
+}
+
+.kontak-cta:hover {
+  background: #c08a3d;
+  transform: translateY(-2px);
+}
+
+.kontak-info {
+  display: flex;
+  flex-direction: column;
+  gap: 1.2rem;
+  padding-top: 1.6rem;
+  border-top: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.kontak-info-item dt {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-family: "Alegreya", serif;
+  font-size: 0.72rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: rgba(255, 255, 255, 0.55);
+  margin-bottom: 0.3rem;
+}
+
+.kontak-info-item dd {
+  font-family: "Alegreya", serif;
+  font-size: 1.05rem;
+  color: #ffffff;
+}
+
+.kontak-map {
+  position: relative;
+  aspect-ratio: 4 / 4.6;
+  border-radius: 6px;
+  overflow: hidden;
+  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.35);
+}
+
+.kontak-map iframe {
+  width: 100%;
+  height: 100%;
+  border: 0;
+  display: block;
+  filter: grayscale(0.2) contrast(1.05);
+}
+
+/* =========================
+   ANIMASI SCROLL — KONTAK
+========================= */
+
+.kontak-text > *,
+.kontak-map {
+  opacity: 0;
+  transform: translateY(24px);
+  transition:
+    opacity 1s ease,
+    transform 1s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.kontak-text > *:nth-child(1) {
+  transition-delay: 0.1s;
+}
+.kontak-text > *:nth-child(2) {
+  transition-delay: 0.3s;
+}
+.kontak-text > *:nth-child(3) {
+  transition-delay: 0.5s;
+}
+.kontak-text > *:nth-child(4) {
+  transition-delay: 0.7s;
+}
+.kontak-text > *:nth-child(5) {
+  transition-delay: 0.9s;
+}
+.kontak-map {
+  transition-delay: 0.5s;
+}
+
+.kontak.is-visible .kontak-text > *,
+.kontak.is-visible .kontak-map {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+@media (max-width: 900px) {
+  .kontak-inner {
+    grid-template-columns: 1fr;
+  }
+
+  .kontak-map {
+    aspect-ratio: 16 / 10;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .kontak-text > *,
+  .kontak-map {
+    transition: none;
+    opacity: 1;
+    transform: none;
+  }
+}
